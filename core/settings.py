@@ -27,8 +27,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #added django apps
+    'django.contrib.sites', # for allauth
+
     #3rd party packages
-    'rest_framework',
+    'rest_framework', #Django Rest Framework
+    'rest_framework.authtoken', #DRF authentication using Tokens
+    'rest_framework_swagger', #Swagger is a powerful tool to documnet the API
+    'allauth', #Authentication operations for Django
+    'allauth.account', #Managing account locally Django
+    'allauth.socialaccount', #Managing account with social app accounts Django
+    'dj_rest_auth', #Authentication operations using API
+    'dj_rest_auth.registration', #Working with registeration parameter using API
 
     #local apps
     'contact_us',
@@ -123,3 +133,28 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "contact_us.Contact"
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' #Default normally is OpenAPI not CoreAPI
+}
+
+SITE_ID = 1 #Necessary for 'django.contrib.sites' library
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #Print allauth sent emails in terminal
+
+REST_AUTH = {
+    'SESSION_LOGIN': False #Necessary for getting a Token when registering
+}
+
+
+SWAGGER_SETTINGS = {
+    'LOGIN_URL': 'rest_framework:login',
+    'LOGOUT_URL': 'rest_framework:logout',
+}
