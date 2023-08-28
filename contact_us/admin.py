@@ -1,3 +1,5 @@
 from django.contrib import admin
+from contact_us.models import Contact, Feedback
 
-# Register your models here.
+admin.site.register(Contact)
+admin.site.register(Feedback)
